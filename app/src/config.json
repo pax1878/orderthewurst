@@ -1,0 +1,8 @@
+{
+  "port": 8080,
+  "bodyLimit": "100kb",
+  "corsHeaders": ["Link"],
+  "mongo": {
+    "host": "mongodb://localhost:27017/breakfast"
+  }
+}
