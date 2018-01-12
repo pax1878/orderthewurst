@@ -1,0 +1,58 @@
+<div *ngIf="breakfast">
+    <ul>
+        <li *ngFor="let product of breakfast.availableProducts">
+            {{product.name}}: {{product.price | price}}
+        </li>
+    </ul>
+<form [formGroup]="participantForm" (ngSubmit)="onSubmit()" novalidate>
+    <label> Name
+        <input formControlName="name"/>
+    </label>
+    <div formArrayName="orderedProducts">
+        <div *ngFor="let product of orderedProducts.controls; let i=index" [formGroupName]="i">
+            <label>{{product.controls.name._value}}
+                <input formControlName="quantity">
+            </label>
+        </div>
+    </div>
+    {{ newParticipationPrice | price }}
+    <button type="submit">Submit</button>
+</form>
+<h2>{{breakfast.title}}</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Teilnehmer</th>
+            <th *ngFor="let product of breakfast.availableProducts">
+                {{product.name}} <small>({{ product.price | price }})</small>
+            </th>
+            <th>Summe</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let participant of breakfast.participants">
+            <td>
+                {{participant.name}}
+            </td>
+            <td *ngFor="let order of participant.products">
+                {{order.quantity}}
+            </td>
+            <td>
+                {{ participant.totalPrice | price }}
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Summe</th>
+            <th *ngFor="let product of breakfast.availableProducts">
+                {{ getSum(product.name) }} <small>({{ getSumPrice(product.name) | price }})</small>
+            </th>
+            <th>
+                {{ totalPrice | price }}
+            </th>
+        </tr>
+    </tfoot>
+</table>
+</div>
+<app-breakfasts></app-breakfasts>

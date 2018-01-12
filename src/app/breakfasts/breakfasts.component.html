@@ -1,0 +1,5 @@
+<ul>
+  <li *ngFor="let breakfast of breakfasts">
+    <a routerLink="/{{ breakfast._id }}">{{ breakfast._id }}: {{ breakfast.title }}</a>
+  </li>
+</ul>

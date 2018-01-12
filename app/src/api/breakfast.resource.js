@@ -56,7 +56,12 @@ export default ({ config }) => resource({
     /** PUT /:id - Update a given entity */
     update({ breakfast, body }, res) {
         body.updated = new Date();
-        Object.assign(breakfast, body);
+        if(body.products && body.name) {
+            breakfast.participants.push(body);
+        } else {
+            Object.assign(breakfast, body);
+        }
+        console.log(breakfast, body);
         breakfast.save().then(
             breakfast => {
                 res.json(breakfast);

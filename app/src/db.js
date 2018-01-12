@@ -10,11 +10,16 @@ export default callback => {
     mongoose.connection.on('error', () => {
         throw new Error(`unable to connect to database: ${mongoUri}`);
     });
+
+    mongoose.connection.on('connected', function () {
+        console.log(`Mongoose default connection open to ${mongoUri}`);
+        callback();
+    });
+
     // print mongoose logs in dev env
     if (config.MONGOOSE_DEBUG) {
         mongoose.set('debug', (collectionName, method, query, doc) => {
             debug(`${collectionName}.${method}`, util.inspect(query, false, 20), doc);
         });
     }
-    callback();
 }
